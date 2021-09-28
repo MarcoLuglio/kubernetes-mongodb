@@ -2,17 +2,20 @@
 Two MongoDB instances replicating between each other.
 
 ```mermaid
-sequenceDiagram
+sequenceDiagram replication process
 
 %% Download mermaid diagram extension to view the sequence below.
 
-participant Rust
+actor Rust
 participant MongoDBA
 participant MongoDBB
 
-Rust->>MongoDBA: Add record
-MongoDBA->>MongoDBB: 1 Replicate
+Rust->>MongoDBA: 1 Upsert record
+activate MongoDBA
+MongoDBA-->>Rust: 2 Acknowledge upsertion
+MongoDBA->>MongoDBB: 3 Replicate
 activate MongoDBB
-MongoDBB-->>MongoDBA: 2 Replicated
+MongoDBB-->>MongoDBA: 4 Acknowledge replication
 deactivate MongoDBB
+deactivate MongoDBA
 ```
