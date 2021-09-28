@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rust-deployment
+  namespace: app
+  labels:
+    app: mongodb-replication
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongodb-replication
+  template:
+    metadata:
+      labels:
+        app: mongodb-replication
+    spec:
+      containers:
+      - name: rust
+        image: nginx:1.14.2
+        resources:
+          limits:
+            cpu: 400m
+            memory: 100Mi
+        ports:
+        - containerPort: 80

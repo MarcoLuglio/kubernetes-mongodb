@@ -1,0 +1,101 @@
+# https://docs.openshift.com/enterprise/3.2/using_images/db_images/mongodb.html
+
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: mongodb-a-deployment
+  namespace: database
+  labels:
+    app: mongodb-replication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-replication
+  template:
+    metadata:
+      labels:
+        app: mongodb-replication
+    spec:
+      volumes:
+      - name: mongodb-a-volume
+        hostPath:
+          path: /var/lib/mongodb
+      containers:
+      - name: mongodb-a
+        env:
+        - name: MONGODB_USER
+          value: "${MONGODB_USER}"
+        - name: MONGODB_PASSWORD
+          value: "${MONGODB_PASSWORD}"
+        - name: MONGODB_DATABASE
+          value: "${MONGODB_DATABASE}"
+        - name: MONGODB_ADMIN_PASSWORD
+          value: "${MONGODB_ADMIN_PASSWORD}"
+        - name: MONGODB_REPLICA_NAME
+          value: "${MONGODB_REPLICA_NAME}"
+        - name: MONGODB_SERVICE_NAME
+          value: "${MONGODB_SERVICE_NAME}"
+        - name: MONGODB_KEYFILE_VALUE
+          value: "${MONGODB_KEYFILE_VALUE}"
+        image: mongodb
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 100Mi
+        volumeMounts:
+        - name: mongodb-a-volume
+          mountPath: /scrub
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: mongodb-b-deployment
+  namespace: database
+  labels:
+    app: mongodb-replication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-replication
+  template:
+    metadata:
+      labels:
+        app: mongodb-replication
+    spec:
+      volumes:
+      - name: mongodb-b-volume
+        hostPath:
+          path: /var/lib/mongodb
+      containers:
+      - name: mongodb-b
+        env:
+        - name: MONGODB_USER
+          value: "${MONGODB_USER}"
+        - name: MONGODB_PASSWORD
+          value: "${MONGODB_PASSWORD}"
+        - name: MONGODB_DATABASE
+          value: "${MONGODB_DATABASE}"
+        - name: MONGODB_ADMIN_PASSWORD
+          value: "${MONGODB_ADMIN_PASSWORD}"
+        - name: MONGODB_REPLICA_NAME
+          value: "${MONGODB_REPLICA_NAME}"
+        - name: MONGODB_SERVICE_NAME
+          value: "${MONGODB_SERVICE_NAME}"
+        - name: MONGODB_KEYFILE_VALUE
+          value: "${MONGODB_KEYFILE_VALUE}"
+        image: mongodb
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 300m
+            memory: 100Mi
+        volumeMounts:
+        - name: mongodb-b-volume
+          mountPath: /scrub
