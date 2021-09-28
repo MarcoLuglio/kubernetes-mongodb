@@ -2,9 +2,10 @@
 Two MongoDB instances replicating between each other.
 
 ```mermaid
-sequenceDiagram replication process
+sequenceDiagram
 
 %% Download mermaid diagram extension to view the sequence below.
+%% Try it on https://mermaid-js.github.io/mermaid-live-editor/edit
 
 actor Rust
 participant MongoDBA
