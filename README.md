@@ -4,7 +4,7 @@ Two MongoDB instances replicating between each other.
 
 
 ```mermaid
-graph sequenceDiagram
+sequenceDiagram
 participant MongoDBA
 participant MongoDBB
 MongoDBA->>John: Hello John, how are you?
