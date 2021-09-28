@@ -7,7 +7,7 @@ sequenceDiagram
 %% Download mermaid diagram extension to view the sequence below.
 %% Try it on https://mermaid-js.github.io/mermaid-live-editor/edit
 
-actor Rust
+participant Rust
 participant MongoDBA
 participant MongoDBB
 
